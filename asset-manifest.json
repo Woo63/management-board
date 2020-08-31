@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/oo63.github.io/management-board/static/css/main.f6c1eaf5.chunk.css",
-    "main.js": "/oo63.github.io/management-board/static/js/main.4ed458c0.chunk.js",
-    "main.js.map": "/oo63.github.io/management-board/static/js/main.4ed458c0.chunk.js.map",
-    "runtime-main.js": "/oo63.github.io/management-board/static/js/runtime-main.03930fc4.js",
-    "runtime-main.js.map": "/oo63.github.io/management-board/static/js/runtime-main.03930fc4.js.map",
-    "static/js/2.d6e7162f.chunk.js": "/oo63.github.io/management-board/static/js/2.d6e7162f.chunk.js",
-    "static/js/2.d6e7162f.chunk.js.map": "/oo63.github.io/management-board/static/js/2.d6e7162f.chunk.js.map",
-    "index.html": "/oo63.github.io/management-board/index.html",
-    "precache-manifest.a32e2fc355071ebd8ea4738d1c03d4ba.js": "/oo63.github.io/management-board/precache-manifest.a32e2fc355071ebd8ea4738d1c03d4ba.js",
-    "service-worker.js": "/oo63.github.io/management-board/service-worker.js",
-    "static/css/main.f6c1eaf5.chunk.css.map": "/oo63.github.io/management-board/static/css/main.f6c1eaf5.chunk.css.map",
-    "static/js/2.d6e7162f.chunk.js.LICENSE.txt": "/oo63.github.io/management-board/static/js/2.d6e7162f.chunk.js.LICENSE.txt"
+    "main.css": "/management-board/static/css/main.f6c1eaf5.chunk.css",
+    "main.js": "/management-board/static/js/main.1ecbbab9.chunk.js",
+    "main.js.map": "/management-board/static/js/main.1ecbbab9.chunk.js.map",
+    "runtime-main.js": "/management-board/static/js/runtime-main.74e5063d.js",
+    "runtime-main.js.map": "/management-board/static/js/runtime-main.74e5063d.js.map",
+    "static/js/2.c2e8971b.chunk.js": "/management-board/static/js/2.c2e8971b.chunk.js",
+    "static/js/2.c2e8971b.chunk.js.map": "/management-board/static/js/2.c2e8971b.chunk.js.map",
+    "index.html": "/management-board/index.html",
+    "precache-manifest.eef64ffcba69ec576d5dec739c0d425b.js": "/management-board/precache-manifest.eef64ffcba69ec576d5dec739c0d425b.js",
+    "service-worker.js": "/management-board/service-worker.js",
+    "static/css/main.f6c1eaf5.chunk.css.map": "/management-board/static/css/main.f6c1eaf5.chunk.css.map",
+    "static/js/2.c2e8971b.chunk.js.LICENSE.txt": "/management-board/static/js/2.c2e8971b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.03930fc4.js",
-    "static/js/2.d6e7162f.chunk.js",
+    "static/js/runtime-main.74e5063d.js",
+    "static/js/2.c2e8971b.chunk.js",
     "static/css/main.f6c1eaf5.chunk.css",
-    "static/js/main.4ed458c0.chunk.js"
+    "static/js/main.1ecbbab9.chunk.js"
   ]
 }
