@@ -21,13 +21,16 @@ const Alert=styled.div`
     text-align: center;
 `;
 
-const Table=({loading, error, title, tickets})=>{
+const Table=({loading, error, title, tickets, onDragStart, onDragOver, onDrop, tableId})=>{
     return(
-        <TableWrapper>
+        <TableWrapper
+            onDragOver={onDragOver}
+            onDrop={e => onDrop(e, tableId)}
+        >
             <p>{title}</p>
             {(loading || error) && <Alert>{loading ? 'Loading...' : error}</Alert>}
             {tickets.map(item=>(
-                <Ticket title={item.title} body={item.body}/>
+                <Ticket key={item.id} onDragStart={onDragStart} ticket={item}/>
             ))}
         </TableWrapper>
     )

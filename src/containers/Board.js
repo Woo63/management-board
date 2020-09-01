@@ -12,30 +12,64 @@ const BoardWrapper=styled.div`
     padding:0 15px;
 `;
 
-const Board =({tables, loading, error, data})=>(
-    // render(){
-    //     const { data, loading, error } = this.state;
-    //     const tables=[
-    //         {id:1,title:'TO DO'},
-    //         {id:2,title:'ACTIVE'},
-    //         {id:3,title:'REVIEW'},
-    //         {id:4,title:'DONE'}
-    //     ]
-    //     return()
+class Board extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            tickets: [],
+        };
+        this.onDragOver = this.onDragOver.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+    }
 
-    <BoardWrapper>
-        {
-            tables.map(item => (
-                <Table
-                    key={item.id}
-                    title={item.title}
-                    loading={loading}
-                    error={error}
-                    tickets={data.filter(ticket => ticket.lane === item.id)}
-                />
-            ))
+    componentDidUpdate(prevProps) {
+        if (prevProps.data !== this.props.data) {
+            this.setState({tickets: this.props.data});
         }
-    </BoardWrapper>
-);
+    }
+
+    onDragStart = (e, id) => {
+        e.dataTransfer.setData('id', id);
+    };
+    onDragOver = e => {
+        e.preventDefault();
+    };
+    onDrop = (e, tableId) => {
+        const id = e.dataTransfer.getData('id');
+        const tickets = this.state.tickets.filter(ticket => {
+            if (ticket.id === id) {
+                ticket.lane = tableId;
+            }
+            return ticket;
+        });
+        this.setState({
+            ...this.state,
+            tickets,
+        });
+    };
+
+    render() {
+        const {tables, loading, error} = this.props;
+        return (
+            <BoardWrapper>
+                {
+                    tables.map(item => (
+                        <Table
+                            key={item.id}
+                            tableId={item.id}
+                            title={item.title}
+                            loading={loading}
+                            onDragStart={this.onDragStart}
+                            onDragOver={this.onDragOver}
+                            onDrop={this.onDrop}
+                            error={error}
+                            tickets={this.state.tickets.filter(ticket => ticket.lane === item.id)}
+                        />
+                    ))
+                }
+            </BoardWrapper>
+        );
+    }
+}
 
 export default withDataFetching(Board);

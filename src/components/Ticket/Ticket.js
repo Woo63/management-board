@@ -7,6 +7,7 @@ const TicketWrapper=styled.div`
     text-align: left;
     &:not(:last-child) {
         margin-bottom: 5%;
+        margin-right: ${props => !!props.marginRight ? '1%' : '0'};
     }
 `;
 const Title=styled.h4`
@@ -16,11 +17,14 @@ const Title=styled.h4`
 const Body=styled.p`
     // width: 100%;
 `;
-const Ticket=({title, body})=>{
+const Ticket=({ticket, marginRight, onDragStart})=>{
     return(
-        <TicketWrapper>
-            <Title>{title}</Title>
-            <Body>{body}</Body>
+        <TicketWrapper
+            draggable
+            onDragStart={e=> onDragStart(e, ticket.id)}
+            marginRight={marginRight}>
+            <Title>{ticket.title}</Title>
+            <Body>{ticket.body}</Body>
         </TicketWrapper>
     )
 }
