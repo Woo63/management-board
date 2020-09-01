@@ -1,6 +1,7 @@
-import React, {Component} from "react";
+import React from "react";
 import styled from 'styled-components';
 import Table from "../components/Table/Table";
+import withDataFetching from "../withDataFetching";
 
 const BoardWrapper=styled.div`
     display:flex;
@@ -11,57 +12,30 @@ const BoardWrapper=styled.div`
     padding:0 15px;
 `;
 
-class Board extends Component{
-    constructor() {
-        super();
-        this.state = {
-            data: [],
-            loading: true,
-            error: '',
-            }
-        }
-    async componentDidMount() {
-        try {
-            const tickets = await fetch('../../assets/data.json');
-            const ticketsJSON = await tickets.json();
-            if (ticketsJSON) {
-                this.setState({
-                    data: ticketsJSON,
-                    loading: false,
-                });
-            }
-        } catch(error) {
-            this.setState({
-                loading: false,
-                error: error.message,
-            });
-        }
-    }
-    render(){
-        const { data, loading, error } = this.state;
-        const tables=[
-            {id:1,title:'TO DO'},
-            {id:2,title:'ACTIVE'},
-            {id:3,title:'REVIEW'},
-            {id:4,title:'DONE'}
-        ]
-        return(
-            <BoardWrapper>
-                {
-                    tables.map(item=>(
-                        <Table
-                            key={item.id}
-                            title={item.title}
-                            loading={loading}
-                            error={error}
-                            tickets={data.filter(ticket => ticket.lane === item.id)}
-                        />
-                    ))
-                }
-            </BoardWrapper>
+const Board =({tables, loading, error, data})=>(
+    // render(){
+    //     const { data, loading, error } = this.state;
+    //     const tables=[
+    //         {id:1,title:'TO DO'},
+    //         {id:2,title:'ACTIVE'},
+    //         {id:3,title:'REVIEW'},
+    //         {id:4,title:'DONE'}
+    //     ]
+    //     return()
 
-        )
-    }
-};
+    <BoardWrapper>
+        {
+            tables.map(item => (
+                <Table
+                    key={item.id}
+                    title={item.title}
+                    loading={loading}
+                    error={error}
+                    tickets={data.filter(ticket => ticket.lane === item.id)}
+                />
+            ))
+        }
+    </BoardWrapper>
+);
 
-export default Board;
+export default withDataFetching(Board);
