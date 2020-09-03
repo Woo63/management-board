@@ -15,14 +15,15 @@ const Title=styled.h4`
     padding:2%;
 `;
 const Body=styled.p`
-    // width: 100%;
+    width: 100%;
 `;
 const Ticket=({ticket, marginRight, onDragStart})=>{
     return(
         <TicketWrapper
-            draggable
-            onDragStart={e=> onDragStart(e, ticket.id)}
-            marginRight={marginRight}>
+            draggable={true}
+            onDragStart={e => onDragStart && onDragStart(e, ticket.id)}
+            marginRight={marginRight}
+        >
             <Title>{ticket.title}</Title>
             <Body>{ticket.body}</Body>
         </TicketWrapper>

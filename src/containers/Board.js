@@ -2,6 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import Table from "../components/Table/Table";
 import withDataFetching from "../withDataFetching";
+import NewTicket from "./NewTicket";
 
 const BoardWrapper=styled.div`
     display:flex;
@@ -17,6 +18,7 @@ class Board extends React.Component {
         super();
         this.state = {
             tickets: [],
+            length:null
         };
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
@@ -24,33 +26,36 @@ class Board extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.data !== this.props.data) {
-            this.setState({tickets: this.props.data});
+            this.setState({ tickets: this.props.data, length: this.props.data.length});
         }
     }
-
     onDragStart = (e, id) => {
         e.dataTransfer.setData('id', id);
     };
     onDragOver = e => {
         e.preventDefault();
     };
-    onDrop = (e, tableId) => {
+    onDrop = (e, laneId) => {
         const id = e.dataTransfer.getData('id');
+
         const tickets = this.state.tickets.filter(ticket => {
-            if (ticket.id === id) {
-                ticket.lane = tableId;
+            if (ticket.id === parseInt(id)) {
+                ticket.lane = laneId;
             }
             return ticket;
         });
+
         this.setState({
             ...this.state,
-            tickets,
+            tickets
         });
     };
 
     render() {
         const {tables, loading, error} = this.props;
+        console.log(this.state.length)
         return (
+            <div>
             <BoardWrapper>
                 {
                     tables.map(item => (
@@ -68,6 +73,8 @@ class Board extends React.Component {
                     ))
                 }
             </BoardWrapper>
+                <NewTicket id={this.state.length}/>
+            </div>
         );
     }
 }

@@ -7,7 +7,7 @@ export default function withDataFetching(WrappedComponent) {
             this.state = {
                 data: [],
                 loading: true,
-                error: '',
+                error: ''
             }
         }
         async componentDidMount() {
@@ -17,7 +17,7 @@ export default function withDataFetching(WrappedComponent) {
                 if (dataJSON) {
                     this.setState({
                         data: dataJSON,
-                        loading: false,
+                        loading: false
                     });
                 }
             } catch(error) {
@@ -38,8 +38,7 @@ export default function withDataFetching(WrappedComponent) {
                 />
             );
         }
-    };
-    WithDataFetching.displayName =
-        `WithDataFetching(${WrappedComponent.name})`;
+    }
+    WithDataFetching.displayName = `WithDataFetching(${WrappedComponent.name})`;
     return WithDataFetching;
 }

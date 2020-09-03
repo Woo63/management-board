@@ -24,7 +24,7 @@ const Alert=styled.div`
 const Table=({loading, error, title, tickets, onDragStart, onDragOver, onDrop, tableId})=>{
     return(
         <TableWrapper
-            onDragOver={onDragOver}
+            onDragOver={e => onDragOver(e)}
             onDrop={e => onDrop(e, tableId)}
         >
             <p>{title}</p>

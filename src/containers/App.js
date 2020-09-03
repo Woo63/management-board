@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './App.css';
 import Board from "./Board";
 import Header from "../components/Header/Header";
-import Tickets from "./Tickets";
 
 class App extends Component {
     render() {
@@ -16,7 +15,6 @@ class App extends Component {
             <div className="App">
                 <Header title={'Project Management Board'}/>
                 <Board tables={tables}  dataSource={'../../assets/data.json'}/>
-                {/*<Tickets dataSource={'../../assets/data.json'}/>*/}
             </div>
         )
     };
