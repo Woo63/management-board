@@ -1,18 +1,5 @@
 import React from 'react';
-//import * as firebase from "firebase/app";
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAM1t8uBr-XSu0uDtReuOj_B3RmRXsDWsk",
-    authDomain: "management-board-3ec1f.firebaseapp.com",
-    databaseURL: "https://management-board-3ec1f.firebaseio.com",
-    storageBucket: "management-board-3ec1f.appspot.com"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
 const url = process.env.REACT_APP_DB_URL
 export default function withDataFetching(WrappedComponent) {
@@ -27,16 +14,22 @@ export default function withDataFetching(WrappedComponent) {
         }
         async componentDidMount() {
             try {
-                // console.log(firebase)
-                // console.log("database",firebase.database())
                 const res = await fetch(`${url}/tickets.json`);
                 const dataJSON = await res.json();
+                console.log(dataJSON)
+                const payload = Object.keys(dataJSON).map(key => {
+                    return {
+                        ...dataJSON[key],
+                        id: key
+                    }
+                })
                 if (dataJSON) {
                     this.setState({
-                        data: Object.values(dataJSON),
+                        data: payload,
                         loading: false
                     });
                 }
+                console.log(this.state.data)
             } catch(error) {
                 this.setState({
                     loading: false,

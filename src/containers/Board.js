@@ -44,7 +44,7 @@ class Board extends React.Component {
         const id = e.dataTransfer.getData('id');
 
         const tickets = this.state.tickets.filter(ticket => {
-            if (ticket.id === parseInt(id)) {
+            if (ticket.id === id) {
                 ticket.lane = laneId;
             }
             return ticket;
@@ -59,18 +59,16 @@ class Board extends React.Component {
         try {
             let res = await fetch(`${url}/tickets.json`,{method:'POST',body: JSON.stringify(ticket)});
             const dataJSON = await res.json();
-            console.log(dataJSON)
             const payload={
                 ...ticket,
                 id:dataJSON.name
             }
-            //res = await fetch(`${url}/tickets/${dataJSON.name}.json`,{method:'set',body: JSON.stringify({id:dataJSON.name})});
+
             let data=this.state.tickets;
             data.push(payload)
             if (dataJSON) {
                 this.setState({tickets:data})
             }
-            console.log(this.state.tickets)
         } catch (e) {
             throw new Error(e.message)
         }
