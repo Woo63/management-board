@@ -14,7 +14,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Header title={'Project Management Board'}/>
-                <Board tables={tables}  dataSource={'../../assets/data.json'}/>
+                <Board tables={tables}/>
             </div>
         )
     };
