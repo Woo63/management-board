@@ -17,7 +17,7 @@ const Title=styled.h4`
 const Body=styled.p`
     width: 100%;
 `;
-const Ticket=({ticket, marginRight, onDragStart})=>{
+const Ticket=({ticket, marginRight, onDragStart, onRemove})=>{
     return(
         <TicketWrapper
             draggable={true}
@@ -26,6 +26,13 @@ const Ticket=({ticket, marginRight, onDragStart})=>{
         >
             <Title>{ticket.title}</Title>
             <Body>{ticket.body}</Body>
+            <button
+                type="button"
+                className="btn btn-outline-danger btn-sm"
+                onClick={() => onRemove(ticket.id)}
+            >
+                &times;
+            </button>
         </TicketWrapper>
     )
 }

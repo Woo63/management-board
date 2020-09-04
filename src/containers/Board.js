@@ -4,6 +4,7 @@ import Table from "../components/Table/Table";
 import withDataFetching from "../withDataFetching";
 import NewTicket from "./NewTicket";
 
+
 const BoardWrapper=styled.div`
     display:flex;
     flex-direction:row;
@@ -13,6 +14,8 @@ const BoardWrapper=styled.div`
     padding:0 15px;
 `;
 
+const url = process.env.REACT_APP_DB_URL
+
 class Board extends React.Component {
     constructor() {
         super();
@@ -21,6 +24,8 @@ class Board extends React.Component {
         };
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
+        this.postTicket = this.postTicket.bind(this);
+        this.onRemove = this.onRemove.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -50,6 +55,37 @@ class Board extends React.Component {
             tickets
         });
     };
+    async postTicket(ticket){
+        try {
+            let res = await fetch(`${url}/tickets.json`,{method:'POST',body: JSON.stringify(ticket)});
+            const dataJSON = await res.json();
+            console.log(dataJSON)
+            const payload={
+                ...ticket,
+                id:dataJSON.name
+            }
+            //res = await fetch(`${url}/tickets/${dataJSON.name}.json`,{method:'set',body: JSON.stringify({id:dataJSON.name})});
+            let data=this.state.tickets;
+            data.push(payload)
+            if (dataJSON) {
+                this.setState({tickets:data})
+            }
+            console.log(this.state.tickets)
+        } catch (e) {
+            throw new Error(e.message)
+        }
+
+    };
+    async onRemove(id) {
+        const res= await fetch(`${url}/tickets/${id}.json`, {
+            method: 'delete'
+        })
+        await res.json();
+        let arr=this.state.tickets;
+        const index=arr.findIndex(item=> item.id===id);
+        arr.splice(index,1)
+        this.setState({tickets:arr})
+    }
 
 
     render() {
@@ -57,7 +93,7 @@ class Board extends React.Component {
         return (
             <Fragment>
                 {/*eslint-disable-next-line*/}
-                <NewTicket id={this.state.tickets.length}/>
+                <NewTicket postTicket={this.postTicket}/>
                 <BoardWrapper>
                     {
                         tables.map(item => (
@@ -71,6 +107,7 @@ class Board extends React.Component {
                                 onDragOver={this.onDragOver}
                                 onDrop={this.onDrop}
                                 tickets={this.state.tickets.filter(ticket => ticket.lane === item.id)}
+                                onRemove={this.onRemove}
                             />
                         ))
                     }
