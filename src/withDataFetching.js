@@ -16,7 +16,6 @@ export default function withDataFetching(WrappedComponent) {
             try {
                 const res = await fetch(`${url}/tickets.json`);
                 const dataJSON = await res.json();
-                console.log(dataJSON)
                 const payload = Object.keys(dataJSON).map(key => {
                     return {
                         ...dataJSON[key],
@@ -29,7 +28,6 @@ export default function withDataFetching(WrappedComponent) {
                         loading: false
                     });
                 }
-                console.log(this.state.data)
             } catch(error) {
                 this.setState({
                     loading: false,

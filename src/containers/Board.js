@@ -40,20 +40,25 @@ class Board extends React.Component {
     onDragOver = e => {
         e.preventDefault();
     };
-    onDrop = (e, laneId) => {
+    onDrop = async (e, laneId) => {
         const id = e.dataTransfer.getData('id');
-
-        const tickets = this.state.tickets.filter(ticket => {
-            if (ticket.id === id) {
-                ticket.lane = laneId;
-            }
-            return ticket;
-        });
-
-        this.setState({
-            ...this.state,
-            tickets
-        });
+        let indexId=this.state.tickets.findIndex(item=> item.id===id);
+        const ticket={
+            title:this.state.tickets[indexId].title,
+            body:this.state.tickets[indexId].body,
+            lane:laneId
+        }
+        let res = await fetch(`${url}/tickets.json`,{method:'POST',body: JSON.stringify(ticket)})
+        const dataJSON = await res.json();
+        ticket.id=dataJSON.name;
+        let arr=this.state.tickets;
+        const index=arr.findIndex(item=> item.id===id);
+        arr.splice(index,1);
+        arr.push(ticket)
+        this.setState({tickets:arr})
+        fetch(`${url}/tickets/${id}.json`, {
+            method: 'delete'
+        }).then(res=>res.json());
     };
     async postTicket(ticket){
         try {
@@ -75,10 +80,9 @@ class Board extends React.Component {
 
     };
     async onRemove(id) {
-        const res= await fetch(`${url}/tickets/${id}.json`, {
+        await fetch(`${url}/tickets/${id}.json`, {
             method: 'delete'
         })
-        await res.json();
         let arr=this.state.tickets;
         const index=arr.findIndex(item=> item.id===id);
         arr.splice(index,1)
