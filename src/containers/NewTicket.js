@@ -8,8 +8,7 @@ class NewTicket extends Component{
         this.state={
             title:'',
             body:'',
-            lane:1,
-            id:null
+            lane:1
         }
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeBody = this.onChangeBody.bind(this);
@@ -21,8 +20,12 @@ class NewTicket extends Component{
     onSubmit(event){
         alert(`${this.state.title} добавлено!`);
         event.preventDefault();
-        this.setState({id:this.props.id});
-        this.props.postTicket(this.state, this.props.id )
+        this.props.postTicket(this.state)
+        this.setState({
+            title:'',
+            body:'',
+        })
+
     }
 
     onChangeBody(event){
@@ -35,7 +38,7 @@ class NewTicket extends Component{
     render(){
         return(
             <>
-            <form onSubmit={this.onSubmit}>
+            <form id="summid" onSubmit={this.onSubmit}>
                 <p><label> Title: <input type="text" name="title" value={this.state.title}
                                          onChange={this.onChangeTitle}/></label></p>
                 <p><label> Text: <textarea name="body" value={this.state.body}
