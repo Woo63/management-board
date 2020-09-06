@@ -14,24 +14,50 @@ const BoardWrapper=styled.div`
     padding:0 15px;
 `;
 
+const ImgWrapper=styled.img`
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: auto;
+`;
+
+const AddButton = styled.div`
+    cursor: pointer;
+    padding: 30px;
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(217, 158, 187, 0.89);
+    overflow: hidden;
+    opacity: 0.4;
+    box-shadow: 10px 10px 30px #000;}
+`;
+
 const url = process.env.REACT_APP_DB_URL
 
 class Board extends React.Component {
     constructor() {
         super();
         this.state = {
-            tickets: []
+            tickets: [],
+            show:false
         };
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.postTicket = this.postTicket.bind(this);
         this.onRemove = this.onRemove.bind(this);
+        this.onShow=this.onShow.bind(this);
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.data !== this.props.data) {
             this.setState({ tickets: this.props.data});
         }
+    }
+
+    onShow(){
+        this.setState({show:!this.state.show})
     }
 
     onDragStart = (e, id) => {
@@ -94,8 +120,11 @@ class Board extends React.Component {
         const {tables, loading, error} = this.props;
         return (
             <Fragment>
-                {/*eslint-disable-next-line*/}
-                <NewTicket postTicket={this.postTicket}/>
+                {this.state.show
+                    ?<NewTicket postTicket={this.postTicket}/>
+                    :<AddButton onClick={this.onShow}>
+                        <ImgWrapper src={"../../assets/plus.png"} alt={"ошибка"}/>
+                    </AddButton>}
                 <BoardWrapper>
                     {
                         tables.map(item => (

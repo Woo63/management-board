@@ -30,7 +30,7 @@ const Table=({loading, error, title, tickets, onDragStart, onDragOver, onDrop, t
             <p>{title}</p>
             {(loading || error) && <Alert>{loading ? 'Loading...' : error}</Alert>}
             {tickets.map(item=>(
-                <Ticket key={item.id} onDragStart={onDragStart} ticket={item} onRemove={onRemove}/>
+                <Ticket key={item.id} onDragStart={onDragStart} ticket={item} onRemove={onRemove} />
             ))}
         </TableWrapper>
     )
