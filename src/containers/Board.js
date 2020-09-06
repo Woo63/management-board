@@ -1,8 +1,10 @@
-import React, {Fragment} from "react";
+import React from "react";
+import TransitionGroup from 'react-addons-css-transition-group';
 import styled from 'styled-components';
 import Table from "../components/Table/Table";
 import withDataFetching from "../withDataFetching";
 import NewTicket from "./NewTicket";
+import './Board.css'
 
 
 const BoardWrapper=styled.div`
@@ -41,13 +43,15 @@ class Board extends React.Component {
         super();
         this.state = {
             tickets: [],
-            show:false
+            showForm:false,
+            showButton:true
         };
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.postTicket = this.postTicket.bind(this);
         this.onRemove = this.onRemove.bind(this);
-        this.onShow=this.onShow.bind(this);
+        this.onShowButton=this.onShowButton.bind(this);
+        this.onShowForm=this.onShowForm.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -56,8 +60,13 @@ class Board extends React.Component {
         }
     }
 
-    onShow(){
-        this.setState({show:!this.state.show})
+    onShowButton(){
+        console.log('showbutton')
+        this.setState({showButton:!this.state.showButton, showForm:!this.state.showForm})
+    }
+    onShowForm(){
+        console.log('showform')
+        this.setState({showForm:!this.state.showForm, showButton:!this.state.showButton})
     }
 
     onDragStart = (e, id) => {
@@ -113,18 +122,29 @@ class Board extends React.Component {
         const index=arr.findIndex(item=> item.id===id);
         arr.splice(index,1)
         this.setState({tickets:arr})
+
     }
 
 
     render() {
         const {tables, loading, error} = this.props;
         return (
-            <Fragment>
-                {this.state.show
-                    ?<NewTicket postTicket={this.postTicket}/>
-                    :<AddButton onClick={this.onShow}>
+            <>
+                {console.log(this.state.showButton, this.state.showForm)}
+                {this.state.showButton && (
+                    <AddButton onClick={this.onShowForm}>
                         <ImgWrapper src={"../../assets/plus.png"} alt={"ошибка"}/>
-                    </AddButton>}
+                    </AddButton>
+                )}
+                {this.state.showForm && (
+                    <TransitionGroup
+                        transitionName="item"
+                        transitionEnterTimeout={3000}
+                        transitionLeaveTimeout={3000}
+                    >
+                        <NewTicket className="item" postTicket={this.postTicket} onShowForm={this.onShowForm}/>
+                    </TransitionGroup>
+                )}
                 <BoardWrapper>
                     {
                         tables.map(item => (
@@ -143,7 +163,7 @@ class Board extends React.Component {
                         ))
                     }
                 </BoardWrapper>
-            </Fragment>
+            </>
         );
     }
 }
