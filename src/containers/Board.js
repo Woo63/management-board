@@ -15,24 +15,7 @@ const BoardWrapper=styled.div`
     flex-wrap:wrap;
     padding:0 15px;
 `;
-const ImgWrapper=styled.img`
-    display: block;
-    margin: auto;
-    width: 100%;
-    height: auto;
-`;
-const AddButton = styled.div`
-    cursor: pointer;
-    padding: 30px;
-    margin: auto;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: rgba(217, 158, 187, 0.89);
-    overflow: hidden;
-    opacity: 0.4;
-    box-shadow: 10px 10px 30px #000;
-`;
+
 
 const url = process.env.REACT_APP_DB_URL
 
@@ -40,25 +23,18 @@ class Board extends React.Component {
     constructor() {
         super();
         this.state = {
-            tickets: [],
-            showForm:false,
-            showButton:true
+            tickets: []
         };
         this.onDragOver = this.onDragOver.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.postTicket = this.postTicket.bind(this);
         this.onRemove = this.onRemove.bind(this);
-        this.onShowForm=this.onShowForm.bind(this);
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.data !== this.props.data) {
             this.setState({ tickets: this.props.data});
         }
-    }
-
-    onShowForm(){
-        this.setState({showForm:!this.state.showForm})
     }
 
     onDragStart = (e, id) => {
@@ -122,16 +98,13 @@ class Board extends React.Component {
         const {tables, loading, error} = this.props;
         return (
             <>
-                <AddButton onClick={this.onShowForm}>
-                    <ImgWrapper src={"../../assets/plus.png"} alt={"not found"}/>
-                </AddButton>
                 <CSSTransition
-                    in={this.state.showForm}
+                    in={this.props.showForm}
                     classNames='form'
                     timeout={500}
                     unmountOnExit
                 >
-                    <NewTicket className="item" postTicket={this.postTicket} onShowForm={this.onShowForm}/>
+                    <NewTicket className="item" postTicket={this.postTicket} onShowForm={this.props.onShowForm}/>
                 </CSSTransition>
                 <BoardWrapper>
                     {
