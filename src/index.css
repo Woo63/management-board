@@ -11,4 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.form-enter {
+  opacity: 0;
+}
+.form-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.form-exit {
+  opacity: 1;
+}
+.form-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
