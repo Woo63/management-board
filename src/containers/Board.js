@@ -4,6 +4,7 @@ import Table from "../components/Table/Table";
 import withDataFetching from "../withDataFetching";
 import NewTicket from "./NewTicket";
 import '../index.css'
+import {CSSTransition} from "react-transition-group";
 
 
 const BoardWrapper=styled.div`
@@ -14,14 +15,12 @@ const BoardWrapper=styled.div`
     flex-wrap:wrap;
     padding:0 15px;
 `;
-
 const ImgWrapper=styled.img`
     display: block;
     margin: auto;
     width: 100%;
     height: auto;
 `;
-
 const AddButton = styled.div`
     cursor: pointer;
     padding: 30px;
@@ -32,7 +31,7 @@ const AddButton = styled.div`
     background: rgba(217, 158, 187, 0.89);
     overflow: hidden;
     opacity: 0.4;
-    box-shadow: 10px 10px 30px #000;}
+    box-shadow: 10px 10px 30px #000;
 `;
 
 const url = process.env.REACT_APP_DB_URL
@@ -59,8 +58,7 @@ class Board extends React.Component {
     }
 
     onShowForm(){
-        console.log('showform')
-        this.setState({showForm:!this.state.showForm, showButton:!this.state.showButton})
+        this.setState({showForm:!this.state.showForm})
     }
 
     onDragStart = (e, id) => {
@@ -124,15 +122,17 @@ class Board extends React.Component {
         const {tables, loading, error} = this.props;
         return (
             <>
-                {this.state.showButton && (
-                    <AddButton onClick={this.onShowForm}>
-                        <ImgWrapper src={"../../assets/plus.png"} alt={"ошибка"}/>
-                    </AddButton>
-                )}
-                {this.state.showForm && (
-
-                        <NewTicket className="item" postTicket={this.postTicket} onShowForm={this.onShowForm}/>
-                )}
+                <AddButton onClick={this.onShowForm}>
+                    <ImgWrapper src={"../../assets/plus.png"} alt={"not found"}/>
+                </AddButton>
+                <CSSTransition
+                    in={this.state.showForm}
+                    classNames='form'
+                    timeout={500}
+                    unmountOnExit
+                >
+                    <NewTicket className="item" postTicket={this.postTicket} onShowForm={this.onShowForm}/>
+                </CSSTransition>
                 <BoardWrapper>
                     {
                         tables.map(item => (
