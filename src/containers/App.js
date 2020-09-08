@@ -7,11 +7,12 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            showForm:false
+            showForm: JSON.parse(sessionStorage.getItem('showForm'))||false
         };
         this.onShowForm=this.onShowForm.bind(this);
     }
     onShowForm(){
+        sessionStorage.setItem('showForm', !this.state.showForm)
         this.setState({showForm:!this.state.showForm})
     }
 

@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import Table from "../components/Table/Table";
 import withDataFetching from "../withDataFetching";
-import NewTicket from "./NewTicket";
+import NewTicket from "../components/NewTicket/NewTicket";
 import '../index.css'
 import {CSSTransition} from "react-transition-group";
 

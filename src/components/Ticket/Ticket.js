@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import CloseButton from "../CloseButton/CloseButton";
+
 
 const TicketWrapper=styled.div`
     border-top: 1px solid #9b9d9e;
@@ -18,13 +20,6 @@ const Title=styled.h4`
 const Body=styled.p`
     width: 100%;
 `;
-const Button=styled.button`
-    background:none;
-    border:none;
-    float:right;
-    font-size: 1.2rem;
-    line-height: 1;
-`;
 
 const Ticket=({ticket, marginRight, onDragStart, onRemove})=>{
     return (
@@ -34,16 +29,9 @@ const Ticket=({ticket, marginRight, onDragStart, onRemove})=>{
             onDragStart={e => onDragStart && onDragStart(e, ticket.id)}
             marginRight={marginRight}
         >
-            <Button
-                type="button"
-                className="btn btn-light btn-sm"
-                onClick={() => onRemove(ticket.id)}
-            >
-                &times;
-            </Button>
+            <CloseButton onHandler={()=>onRemove(ticket.id)}/>
             <Title>{ticket.title}</Title>
             <Body>{ticket.body}</Body>
-
         </TicketWrapper>
     )
 }
