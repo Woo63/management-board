@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import img from '../../img/plus.png'
 
 const HeaderWrapper=styled.div`
     display: flex;
@@ -39,7 +40,7 @@ const Header = ({title, onShowForm}) => {
         <HeaderWrapper>
             <TitleWrapper>{title}</TitleWrapper>
             <AddButton onClick={onShowForm}>
-                <ImgWrapper src={'/assets/plus.png'} alt={"not found"}/>
+                <ImgWrapper src={img} alt={"not found"}/>
             </AddButton>
         </HeaderWrapper>
     )
