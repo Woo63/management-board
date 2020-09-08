@@ -39,7 +39,7 @@ const Header = ({title, onShowForm}) => {
         <HeaderWrapper>
             <TitleWrapper>{title}</TitleWrapper>
             <AddButton onClick={onShowForm}>
-                <ImgWrapper src={"../../assets/plus.png"} alt={"not found"}/>
+                <ImgWrapper src={'/assets/plus.png'} alt={"not found"}/>
             </AddButton>
         </HeaderWrapper>
     )
